@@ -10,19 +10,25 @@
  */
 class Solution {
 public:
-    ListNode *middleNode(ListNode *head)
-    {
-        ListNode *curr = head;
-        int totalNodes = 0;
-        while (head != NULL)
-        {
-            totalNodes++;
-            head = head->next;
+
+    int numberOfNodes(ListNode* head){
+        ListNode *ptr = head;
+        int count = 0;
+        while(ptr!=NULL){
+            ptr = ptr->next;
+            count++;
         }
-        for (int i = 0; i < ceil(totalNodes / 2); i++)
-        {
-            curr = curr->next;
+        return count;
+    }
+
+    ListNode* middleNode(ListNode* head) {
+        ListNode *ptr = head;
+        int nodes = numberOfNodes(head);
+        int count = 0;
+        while(count != nodes/2){
+            count++;
+            ptr = ptr->next;
         }
-        return curr;
+        return ptr;
     }
 };
