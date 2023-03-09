@@ -9,17 +9,22 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        ListNode *slow = head, *fast = head;
-        while (fast && fast->next) {
-            slow = slow->next;
-            fast = fast->next->next;
-            if (slow == fast) break;
+        ListNode *hare = head;
+        ListNode *turtle = head;
+        while(!(hare == NULL) && !(hare->next == NULL)){
+            turtle = turtle->next;
+            hare = (hare->next)->next;
+            if(hare == turtle){
+                turtle = head;
+                int count = 0;
+                while(turtle != hare){
+                    turtle = turtle->next;
+                    hare = hare->next;
+                    count++;
+                }
+                return hare;
+            }
         }
-        if (!(fast && fast->next)) return NULL;
-        while (head != slow) {
-            head = head->next;
-            slow = slow->next;
-        }
-        return head;
+        return NULL;
     }
 };
