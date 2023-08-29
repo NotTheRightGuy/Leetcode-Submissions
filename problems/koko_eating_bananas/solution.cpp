@@ -1,38 +1,32 @@
-#define all(x) x.begin(), x.end()
-
 class Solution
 {
 public:
-    long long solve(vector<int> &piles, int mid)
+    bool ateAll(vector<int> piles, long long k, long long h)
     {
-        long long hours = 0;
-        for (int i = 0; i < piles.size(); i++)
+        long long timeElapsed = 0;
+        for (int pile : piles)
         {
-            int hoursPerPile = ceil(piles[i] / (double)mid);
-            hours += hoursPerPile;
+
+            timeElapsed += ceil(pile / (double)k);
         }
-        return hours;
+        return timeElapsed <= h;
     }
 
     int minEatingSpeed(vector<int> &piles, int h)
     {
-        int lower = 1;
-        int upper = *max_element(all(piles));
-
-        int ans = -1;
-        while (lower <= upper)
+        int n = piles.size();
+        sort(piles.begin(), piles.end());
+        int low = 1;
+        int mid;
+        int high = piles[n - 1];
+        while (low <= high)
         {
-            int mid = lower + ((upper - lower) / 2);
-            long long hoursToEatAll = solve(piles, mid);
-
-            if (hoursToEatAll <= h)
-            {
-                ans = mid;
-                upper = mid - 1;
-            }
+            mid = (high + low) / 2;
+            if (ateAll(piles, mid, h))
+                high = mid - 1;
             else
-                lower = mid + 1;
+                low = mid + 1;
         }
-        return ans;
+        return low;
     }
 };
