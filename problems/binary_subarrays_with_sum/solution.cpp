@@ -3,20 +3,16 @@ class Solution
 public:
     int numSubarraysWithSum(vector<int> &nums, int goal)
     {
-        int n = nums.size();
-        int ans = 0;
-        int sum = 0;
-        unordered_map<int, int> mp;
-        mp[0] = 1;
-        for (int i = 0; i < n; i++)
+        map<int, int> mpp;
+        mpp[0] = 1;
+        int preSum = 0, cnt = 0;
+        for (int i = 0; i < nums.size(); i++)
         {
-            sum += nums[i];
-            if (mp.find(sum - goal) != mp.end())
-            {
-                ans += mp[sum - goal];
-            }
-            mp[sum]++;
+            preSum += nums[i];
+            int remove = preSum - goal;
+            cnt += mpp[remove];
+            mpp[preSum] += 1;
         }
-        return ans;
+        return cnt;
     }
 };
