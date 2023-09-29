@@ -1,17 +1,33 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
-    public:
-    int maxLength=0;
-
-    void solve(TreeNode* root,int dir,int currLength){
-        if(!root) return;
-        maxLength=max(maxLength,currLength);
-        solve(root->left,0,dir?currLength+1:1);
-        solve(root->right,1,dir?1:currLength+1);
+public:
+    int longestZigZag(TreeNode* root) {
+        int max_length = 0;
+        dfs(root, false, 0, max_length);
+        dfs(root, true, 0, max_length);
+        return max_length;
     }
 
-    int longestZigZag(TreeNode* root) {
-        solve(root,0,0);
-        solve(root,1,0);
-        return maxLength;
+    void dfs(TreeNode* node, bool isRight, int length, int& max_length){
+        if(!node) return;
+        max_length = max(max_length, length);
+        if(isRight){
+            dfs(node->right,false,length+1,max_length);
+            dfs(node->left, true,1,max_length);
+        }
+        else{
+            dfs(node->left,true,length + 1,max_length);
+            dfs(node->right, false,1,max_length);
+        }
     }
 };
