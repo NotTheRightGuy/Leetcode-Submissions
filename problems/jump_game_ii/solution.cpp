@@ -5,7 +5,7 @@ public:
     {
         int res = 0;
         int left{0}, right{0};
-        int farthest = 0;
+        int farthest;
         while (right < nums.size() - 1)
         {
             farthest = 0;
